@@ -1,6 +1,6 @@
 package api.hue.dao.attribute
 
-import api.hue.endpoint.Groups
+import api.hue.endpoint.{Groups, Lights}
 import play.api.libs.json._
 
 /**
@@ -17,7 +17,7 @@ case class On(on: Boolean) extends Attribute {
 }
 
 object On {
-  private val ENDPOINTS: Set[String] = Set(Groups.NAME)
+  private val ENDPOINTS: Set[String] = Set(Groups.NAME, Lights.NAME)
 
   val NAME: String = "on"
 

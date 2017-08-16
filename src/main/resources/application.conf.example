@@ -1,0 +1,6 @@
+{
+  "hue" : {
+    "key" : "<hue API key>"
+    "address" : "<hue bridge address>"
+  }
+}

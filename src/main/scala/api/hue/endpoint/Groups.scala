@@ -2,7 +2,7 @@ package api.hue.endpoint
 
 import api.hue.Bridge
 import api.hue.dao.Group
-import api.hue.dao.attribute.{Brightness, Hue, On, Saturation}
+import api.hue.dao.attribute._
 import com.google.inject.Inject
 import play.api.libs.json.JsObject
 
@@ -33,7 +33,8 @@ object Groups {
     Brightness.NAME,
     Hue.NAME,
     On.NAME,
-    Saturation.NAME
+    Saturation.NAME,
+    TransitionTime.NAME
   )
 
   val NAME: String = "groups"

@@ -34,7 +34,8 @@ object Lights {
     Brightness.NAME,
     Hue.NAME,
     On.NAME,
-    Saturation.NAME
+    Saturation.NAME,
+    TransitionTime.NAME
   )
   val NAME: String = "lights"
   val PATH: String = "/lights"

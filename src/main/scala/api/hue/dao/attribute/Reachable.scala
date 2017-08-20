@@ -1,6 +1,5 @@
 package api.hue.dao.attribute
 
-import api.hue.endpoint.Lights
 import play.api.libs.json._
 
 /**

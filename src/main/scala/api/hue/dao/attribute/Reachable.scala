@@ -11,14 +11,11 @@ import play.api.libs.json._
 case class Reachable(reachable: Boolean) extends Attribute {
   import Reachable._
 
-  override def endpoints: Set[String] = ENDPOINTS
   override def name: String = NAME
   override def toJs: JsObject = Json.obj("reachable" -> reachable)
 }
 
 object Reachable {
-  private val ENDPOINTS: Set[String] = Set(Lights.NAME)
-
   val NAME: String = "reachable"
 
   implicit val reads: Reads[Reachable] = (__ \ "reachable").read[Boolean].map(Reachable(_))

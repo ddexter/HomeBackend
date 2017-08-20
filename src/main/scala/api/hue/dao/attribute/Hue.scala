@@ -12,14 +12,11 @@ case class Hue(hue: Int) extends Attribute {
 
   if (hue < 0 || hue > Hue.MAX_HUE) throw new IllegalStateException("Illegal Hue: " + hue)
 
-  override def endpoints: Set[String] = ENDPOINTS
   override def name: String = NAME
   override def toJs: JsObject = Json.obj("hue" -> hue)
 }
 
 object Hue {
-  private val ENDPOINTS: Set[String] = Set(Groups.NAME, Lights.NAME)
-
   val NAME: String = "hue"
   val MAX_HUE: Int = 65535
 

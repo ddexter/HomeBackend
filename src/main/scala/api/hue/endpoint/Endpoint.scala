@@ -27,8 +27,10 @@ trait Endpoint[T <: Controller] {
 
   protected def path: String
 
+  protected def supportedPutAttributes: Set[String]
+
   protected def validate(attributes: Seq[Attribute]): Unit = {
-    if (!attributes.map(_.endpoints).forall(_(name)))
+    if (!attributes.map(_.name).forall(supportedPutAttributes(_)))
       throw new IllegalStateException("Invalid attribute for " + path + " endpoint")
   }
 

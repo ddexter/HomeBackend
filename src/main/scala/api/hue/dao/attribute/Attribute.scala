@@ -10,5 +10,4 @@ import play.api.libs.json.{JsObject, JsValue, Reads, Writes}
 trait Attribute {
   def name: String
   def toJs: JsObject
-  def endpoints: Set[String]
 }

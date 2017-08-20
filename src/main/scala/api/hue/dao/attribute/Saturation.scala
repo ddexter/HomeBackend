@@ -12,15 +12,12 @@ case class Saturation(sat: Short) extends Attribute {
 
   if (sat < 0 || sat > MAX_SATURATION) throw new IllegalStateException("Illegal Saturation: " + sat)
 
-  override def endpoints: Set[String] = ENDPOINTS
   override def name: String = NAME
   override def toJs: JsObject = Json.obj("sat" -> sat)
 
 }
 
 object Saturation {
-  private val ENDPOINTS: Set[String] = Set(Groups.NAME, Lights.NAME)
-
   val NAME: String = "sat"
   val MAX_SATURATION: Short = 254
 

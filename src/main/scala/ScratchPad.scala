@@ -1,6 +1,6 @@
 import api.hue.HueModule
 import api.ApiModule
-import api.hue.dao.attribute.{Brightness, Hue, On, Saturation}
+import api.hue.dao.attribute._
 import api.hue.endpoint.{Groups, Lights}
 import com.google.inject.Guice
 import net.codingwell.scalaguice.ScalaModule
@@ -25,12 +25,12 @@ object ScratchPad {
     val groups: Groups = injector.instance[Groups]
     val lights: Lights = injector.instance[Lights]
 
-    val on = On(true)
+    val on = On(false)
     val bri = Brightness(Brightness.MAX_BRIGHTNESS)
     val hue = Hue(39391)
     val sat = Saturation(14)
     println(Await.result(groups.get, 30.seconds))
     println(Await.result(lights.get, 30.seconds))
-    //groups.put("2", on, bri, sat, hue)
+    groups.put("2", on, bri, sat, hue)
   }
 }

@@ -12,14 +12,11 @@ case class Brightness(bri: Short) extends Attribute {
 
   if (bri < 0 || bri > MAX_BRIGHTNESS) throw new IllegalStateException("Illegal Brightness: " + bri)
 
-  override def endpoints: Set[String] = ENDPOINTS
   override def name: String = NAME
   override def toJs: JsObject = Json.obj("bri" -> bri)
 }
 
 object Brightness {
-  private val ENDPOINTS: Set[String] = Set(Groups.NAME, Lights.NAME)
-
   val NAME: String = "bri"
   val MAX_BRIGHTNESS: Short = 254
 

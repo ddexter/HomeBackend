@@ -19,7 +19,7 @@ trait Endpoint[T <: Controller] {
 
   def get: Future[Map[String, T]]
 
-  def put(name: String, attributes: Attribute*): Future[JsValue] = {
+  def put(id: String, attributes: Attribute*): Future[JsValue] = {
     validate(attributes)
     val data = attributes.foldLeft(Json.obj())((l, r) => l.deepMerge(r.toJs))
     bridge.put(path + "/" + name + "/action", data)

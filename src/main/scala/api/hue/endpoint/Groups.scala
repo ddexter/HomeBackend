@@ -14,6 +14,7 @@ import scala.concurrent.Future
   * @author ddexter
   */
 class Groups @Inject() (bridgeInst: Bridge) extends Endpoint[Group] {
+
   import Groups._
 
   override def bridge: Bridge = bridgeInst
@@ -22,6 +23,15 @@ class Groups @Inject() (bridgeInst: Bridge) extends Endpoint[Group] {
 
   override def get: Future[Map[String, Group]] =
     bridge.get(path).map { js => js.as[JsObject].fields.toMap.map { case (k, v) => (k, v.as[Group]) } }
+
+  /**
+    *
+    * @param groupName The group name to search for
+    * @return The group id corresponding to a group name or none if DNE
+    */
+  def getGroupId(groupName: String): Future[Option[String]] = {
+    get.map { groups => { groups.find(entry => entry._2.name == groupName).map(_._1) } }
+  }
 
   override protected def path: String = PATH
 

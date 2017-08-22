@@ -24,7 +24,6 @@ case class TransitionTime(duration: Duration) extends Attribute {
 
 object TransitionTime {
   val NAME: String = "transitiontime"
-  val ONE_DAY: Int = 864000
 
   implicit val reads: Reads[TransitionTime] = (__ \ "transitiontime").read[Long].map(new TransitionTime(_))
 }

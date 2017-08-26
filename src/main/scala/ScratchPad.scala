@@ -30,6 +30,7 @@ object ScratchPad {
     println(Await.result(lights.get, 30.seconds))
 
     val tenThirty = DateTime.now.withTimeAtStartOfDay.plusHours(22).plusMinutes(30)
-    Await.result(states.sunset(Room.BEDROOM, tenThirty), 30.seconds)
+    //Await.result(states.sunset(Room.BEDROOM, tenThirty), 30.seconds)
+    Await.result(states.on(Room.BEDROOM), 10.second)
   }
 }

@@ -6,6 +6,8 @@ scalaVersion := "2.12.3"
 
 resolvers += "mvnrepository" at "https://mvnrepository.com/artifact"
 
+fork in run := true
+
 libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time" % "2.16.0",
   "com.typesafe" % "config" % "1.3.1",

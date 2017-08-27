@@ -1,6 +1,6 @@
 package api.hue
 
-import api.hue.dao.attribute.TransitionTime
+import api.hue.dao.attribute.{Attribute, TransitionTime}
 import api.hue.endpoint.{Groups, Lights}
 import com.google.inject.Inject
 import com.github.nscala_time.time.Imports._
@@ -34,23 +34,19 @@ class State @Inject() (groupsEndpoint: Groups, lightsEndpoint: Lights) {
     })
   }
 
-  def off(groupName: String): Future[JsValue] = {
-    groupsEndpoint.getGroupId(groupName).flatMap(maybeGroupId => {
-      val groupId = maybeGroupId match {
-        case Some(id) => id
-        case _ => throw new IllegalArgumentException("Group name not found")
-      }
-      groupsEndpoint.put(groupId, ColorConstants.OFF:_*)
-    })
-  }
+  def off(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.OFF)
 
-  def on(groupName: String): Future[JsValue] = {
+  def on(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.ON)
+
+  def maxBright(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.MAX_BRIGHT)
+
+  private def simpleRun(groupName: String, attributes: Seq[Attribute]): Future[JsValue] = {
     groupsEndpoint.getGroupId(groupName).flatMap(maybeGroupId => {
       val groupId = maybeGroupId match {
         case Some(id) => id
         case _ => throw new IllegalArgumentException("Group name not found")
       }
-      groupsEndpoint.put(groupId, ColorConstants.ON:_*)
+      groupsEndpoint.put(groupId, attributes:_*)
     })
   }
 }

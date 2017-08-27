@@ -3,7 +3,7 @@ import api.ApiModule
 import api.hue.endpoint.{Groups, Lights}
 import com.google.inject.Guice
 import net.codingwell.scalaguice.ScalaModule
-import org.joda.time.{DateTime, Minutes}
+import org.joda.time.DateTime
 
 import scala.concurrent.duration._
 import scala.concurrent.Await

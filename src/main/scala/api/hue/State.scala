@@ -28,6 +28,8 @@ class State @Inject() (groupsEndpoint: Groups, lightsEndpoint: Lights) {
       val now = DateTime.now
       val transitionDuration =
         if (now > endTime) 1.second.toDuration.toScalaDuration
+        else if (now.to(endTime).toDuration.toScalaDuration > TransitionTime.MAX_TRANSITION_TIME)
+          TransitionTime.MAX_TRANSITION_TIME
         else now.to(endTime).toDuration.toScalaDuration
       val transitionTime = TransitionTime(transitionDuration)
       groupsEndpoint.put(groupId, ColorConstants.SUNSET :+ transitionTime:_*)

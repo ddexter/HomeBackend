@@ -15,11 +15,35 @@ import scala.concurrent.Future
   */
 class State @Inject() (groupsEndpoint: Groups, lightsEndpoint: Lights) {
 
+  def sunrise(groupName: String, endTime: DateTime): Future[JsValue] =
+    timedRun(groupName, endTime, ColorConstants.MAX_BRIGHT)
+
+  def sunset(groupName: String, endTime: DateTime): Future[JsValue] =
+    timedRun(groupName, endTime, ColorConstants.SUNSET)
+
+  def off(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.OFF)
+
+  def on(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.ON)
+
+  def maxBright(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.MAX_BRIGHT)
+
+  def wakeUp(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.SUNSET)
+
+  private def simpleRun(groupName: String, attributes: Seq[Attribute]): Future[JsValue] = {
+    groupsEndpoint.getGroupId(groupName).flatMap(maybeGroupId => {
+      val groupId = maybeGroupId match {
+        case Some(id) => id
+        case _ => throw new IllegalArgumentException("Group name not found")
+      }
+      groupsEndpoint.put(groupId, attributes:_*)
+    })
+  }
+
   /**
-    * Slowly fade into dim sunset
+    * Slowly fade into provided attributes
     * @param groupName The name of the group to apply fade
     */
-  def sunset(groupName: String, endTime: DateTime): Future[JsValue] = {
+  private def timedRun(groupName: String, endTime: DateTime, attributes: Seq[Attribute]): Future[JsValue] = {
     groupsEndpoint.getGroupId(groupName).flatMap(maybeGroupId => {
       val groupId = maybeGroupId match {
         case Some(id) => id
@@ -33,22 +57,6 @@ class State @Inject() (groupsEndpoint: Groups, lightsEndpoint: Lights) {
         else now.to(endTime).toDuration.toScalaDuration
       val transitionTime = TransitionTime(transitionDuration)
       groupsEndpoint.put(groupId, ColorConstants.SUNSET :+ transitionTime:_*)
-    })
-  }
-
-  def off(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.OFF)
-
-  def on(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.ON)
-
-  def maxBright(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.MAX_BRIGHT)
-
-  private def simpleRun(groupName: String, attributes: Seq[Attribute]): Future[JsValue] = {
-    groupsEndpoint.getGroupId(groupName).flatMap(maybeGroupId => {
-      val groupId = maybeGroupId match {
-        case Some(id) => id
-        case _ => throw new IllegalArgumentException("Group name not found")
-      }
-      groupsEndpoint.put(groupId, attributes:_*)
     })
   }
 }

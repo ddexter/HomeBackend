@@ -14,6 +14,12 @@ object ColorConstants {
     Hue(39391),
     Saturation(14)
   )
+  val MAX_DIM: Seq[Attribute] = Vector(
+    On(true),
+    Brightness(1),
+    Hue(6291),
+    Saturation(251)
+  )
   val SUNSET: Seq[Attribute] = Vector(
     On(true),
     Brightness(38),

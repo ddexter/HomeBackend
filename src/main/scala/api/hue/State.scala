@@ -27,7 +27,7 @@ class State @Inject() (groupsEndpoint: Groups, lightsEndpoint: Lights) {
 
   def maxBright(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.MAX_BRIGHT)
 
-  def wakeUp(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.SUNSET)
+  def wakeUp(groupName: String): Future[JsValue] = simpleRun(groupName, ColorConstants.MAX_DIM)
 
   private def simpleRun(groupName: String, attributes: Seq[Attribute]): Future[JsValue] = {
     groupsEndpoint.getGroupId(groupName).flatMap(maybeGroupId => {
